@@ -1,27 +1,32 @@
 import express from "express";
-import taskRoutes from "./routes/taskRoutes.js";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import path from "path";
-import { fileURLToPath } from "url";
+import taskRoutes from "./routes/taskRoutes.js";
+import authRoutes from "./routes/auth.js";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-// Servir archivos estáticos
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "public")));
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB conectado ✅"))
+.catch(err => console.error("Error MongoDB:", err));
 
-// Rutas de la API
+// Rutas
 app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
 
-// Endpoint raíz (opcional)
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// Servir frontend estático (si querés index.html)
+app.use(express.static(path.join(process.cwd(), "public")));
 
+// Puerto
 const PORT = process.env.PORT || 10000;
-const HOST = "0.0.0.0";
+app.listen(PORT, () => console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`));
 
-app.listen(PORT, HOST, () => {
-  console.log(`Servidor corriendo en http://${HOST}:${PORT}`);
-});
+export default app; // para tests
