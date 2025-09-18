@@ -1,30 +1,24 @@
-import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
 
-import taskRoutes from "./routes/taskRoutes.js";
-import authRoutes from "./routes/auth.js";
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
 
-dotenv.config();
+// Antes de guardar, hasheamos la clave
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-const app = express();
-const PORT = process.env.PORT || 10000;
+// Método para comparar contraseña
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
-// Middleware
-app.use(express.json());
-app.use(express.static("public"));
+const User = mongoose.model("User", userSchema);
 
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB conectado"))
-.catch(err => console.error("❌ Error MongoDB:", err));
-
-// Rutas
-app.use("/api/tasks", taskRoutes);
-app.use("/api/auth", authRoutes);
-
-// Servidor
-app.listen(PORT, () => console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`));
+export default User;
