@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: to-do-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: MONGO_URI
+        value: "TU_MONGO_URI_AQUI"
+      - key: JWT_SECRET
+        value: "MiSecretoSuperSeguro"
+      - key: PORT
+        value: "5000"
