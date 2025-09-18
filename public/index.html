@@ -1,78 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tareas con Paisajes</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f8ff;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            text-align: center;
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-        }
-        main {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background: #fff;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        li img {
-            width: 100px;
-            height: 60px;
-            object-fit: cover;
-            margin-right: 15px;
-            border-radius: 5px;
-        }
-        li span {
-            flex: 1;
-            font-size: 1.1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do Lista y Paisajes</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Mi Lista de Tareas con Paisajes</h1>
-    </header>
-    <main>
-        <h2>Tareas</h2>
-        <ul>
-            <li>
-                <img src="/images/paisaje1.jpg" alt="Paisaje 1">
-                <span>Explorar la montaña</span>
-            </li>
-            <li>
-                <img src="/images/paisaje2.jpg" alt="Paisaje 2">
-                <span>Paseo por la playa</span>
-            </li>
-            <li>
-                <img src="/images/paisaje3.jpg" alt="Paisaje 3">
-                <span>Visitar el bosque</span>
-            </li>
-        </ul>
-    </main>
+  <header>
+    <h1>Mi Lista de Tareas</h1>
+  </header>
+
+  <section>
+    <ul id="task-list">
+      <!-- Las tareas se cargarán aquí -->
+    </ul>
+  </section>
+
+  <section>
+    <h2>Paisajes</h2>
+    <div class="imagenes">
+      <img src="imagen/paisaje1.jpg" alt="Paisaje 1">
+      <img src="imagen/paisaje2.jpg" alt="Paisaje 2">
+    </div>
+  </section>
+
+  <script>
+    async function loadTasks() {
+      const res = await fetch("/api/tasks");
+      const tasks = await res.json();
+      const list = document.getElementById("task-list");
+      list.innerHTML = "";
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = task.title;
+        list.appendChild(li);
+      });
+    }
+
+    loadTasks();
+  </script>
 </body>
 </html>
