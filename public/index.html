@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do Lista y Paisajes</title>
+  <title>Lista de Tareas y Paisajes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,34 +11,20 @@
     <h1>Mi Lista de Tareas</h1>
   </header>
 
-  <section>
-    <ul id="task-list">
-      <!-- Las tareas se cargarán aquí -->
-    </ul>
+  <section class="task-section">
+    <input type="text" id="new-task" placeholder="Agregar nueva tarea">
+    <button id="add-task">Agregar</button>
+    <ul id="task-list"></ul>
   </section>
 
-  <section>
+  <section class="image-section">
     <h2>Paisajes</h2>
-    <div class="imagenes">
-      <img src="imagen/paisaje1.jpg" alt="Paisaje 1">
-      <img src="imagen/paisaje2.jpg" alt="Paisaje 2">
+    <div class="images">
+      <img src="images/paisaje1.jpg" alt="Paisaje 1">
+      <img src="images/paisaje2.jpg" alt="Paisaje 2">
     </div>
   </section>
 
-  <script>
-    async function loadTasks() {
-      const res = await fetch("/api/tasks");
-      const tasks = await res.json();
-      const list = document.getElementById("task-list");
-      list.innerHTML = "";
-      tasks.forEach(task => {
-        const li = document.createElement("li");
-        li.textContent = task.title;
-        list.appendChild(li);
-      });
-    }
-
-    loadTasks();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
