@@ -1,44 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Lista de Tareas y Paisajes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas con Paisajes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        li img {
+            width: 100px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        li span {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Lista de Tareas con Paisajes</h1>
-    <p>Página informativa con lista interactiva</p>
-  </header>
-
-  <section class="todo-section">
-    <h2>Mi Lista de Tareas</h2>
-    <input type="text" id="taskInput" placeholder="Agregar tarea...">
-    <button onclick="addTask()">Agregar</button>
-    <ul id="taskList"></ul>
-  </section>
-
-  <section class="images-section">
-    <h2>Paisajes</h2>
-    <div class="images-container">
-      <img src="images/paisaje1.jpg" alt="Paisaje 1">
-      <img src="images/paisaje2.jpg" alt="Paisaje 2">
-      <img src="images/paisaje3.jpg" alt="Paisaje 3">
-    </div>
-  </section>
-
-  <script>
-    const taskList = document.getElementById('taskList');
-    const taskInput = document.getElementById('taskInput');
-
-    function addTask() {
-      const taskText = taskInput.value.trim();
-      if (!taskText) return;
-      const li = document.createElement('li');
-      li.textContent = taskText;
-      taskList.appendChild(li);
-      taskInput.value = '';
-    }
-  </script>
+    <header>
+        <h1>Mi Lista de Tareas con Paisajes</h1>
+    </header>
+    <main>
+        <h2>Tareas</h2>
+        <ul>
+            <li>
+                <img src="/images/paisaje1.jpg" alt="Paisaje 1">
+                <span>Explorar la montaña</span>
+            </li>
+            <li>
+                <img src="/images/paisaje2.jpg" alt="Paisaje 2">
+                <span>Paseo por la playa</span>
+            </li>
+            <li>
+                <img src="/images/paisaje3.jpg" alt="Paisaje 3">
+                <span>Visitar el bosque</span>
+            </li>
+        </ul>
+    </main>
 </body>
 </html>
