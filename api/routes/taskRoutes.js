@@ -1,32 +1,27 @@
 import express from "express";
 import Task from "../models/Task.js";
-import { authMiddleware } from "./authMiddleware.js";
-
 const router = express.Router();
 
-// Middleware para proteger rutas
-router.use(authMiddleware);
-
-// GET todas las tareas
+// Listar todas las tareas
 router.get("/", async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
 });
 
-// POST nueva tarea
+// Crear tarea
 router.post("/", async (req, res) => {
-  const newTask = new Task(req.body);
-  await newTask.save();
-  res.status(201).json(newTask);
+  const task = new Task(req.body);
+  await task.save();
+  res.status(201).json(task);
 });
 
-// PUT actualizar tarea
+// Actualizar tarea
 router.put("/:id", async (req, res) => {
-  const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updatedTask);
+  const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(task);
 });
 
-// DELETE tarea
+// Borrar tarea
 router.delete("/:id", async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ message: "Tarea eliminada" });
