@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tareas y Paisajes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Lista de Tareas con Paisajes</h1>
+    <p>Página informativa con lista interactiva</p>
+  </header>
+
+  <section class="todo-section">
+    <h2>Mi Lista de Tareas</h2>
+    <input type="text" id="taskInput" placeholder="Agregar tarea...">
+    <button onclick="addTask()">Agregar</button>
+    <ul id="taskList"></ul>
+  </section>
+
+  <section class="images-section">
+    <h2>Paisajes</h2>
+    <div class="images-container">
+      <img src="images/paisaje1.jpg" alt="Paisaje 1">
+      <img src="images/paisaje2.jpg" alt="Paisaje 2">
+      <img src="images/paisaje3.jpg" alt="Paisaje 3">
+    </div>
+  </section>
+
+  <script>
+    const taskList = document.getElementById('taskList');
+    const taskInput = document.getElementById('taskInput');
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (!taskText) return;
+      const li = document.createElement('li');
+      li.textContent = taskText;
+      taskList.appendChild(li);
+      taskInput.value = '';
+    }
+  </script>
+</body>
+</html>
