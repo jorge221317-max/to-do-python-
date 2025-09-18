@@ -1,14 +1,9 @@
 services:
   - type: web
-    name: to-do-api
-    env: node
-    buildCommand: npm install
-    startCommand: npm start
-    plan: free
+    name: to-do-python
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     envVars:
-      - key: MONGO_URI
-        value: "TU_MONGO_URI_AQUI"
-      - key: JWT_SECRET
-        value: "MiSecretoSuperSeguro"
-      - key: PORT
-        value: "5000"
+      - key: PYTHON_VERSION
+        value: 3.11
