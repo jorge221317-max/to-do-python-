@@ -10,8 +10,14 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
+app.get("/api/tasks", (req, res) => {
+  // Lista de tareas ejemplo
+  const tasks = [
+    { id: 1, title: "Hacer ejercicio" },
+    { id: 2, title: "Leer un libro" },
+    { id: 3, title: "Aprender Node.js" }
+  ];
+  res.json(tasks);
 });
 
 app.listen(PORT, () => {
