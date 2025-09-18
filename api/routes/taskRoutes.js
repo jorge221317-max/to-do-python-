@@ -1,30 +1,34 @@
 import express from "express";
+import Task from "../models/Task.js";
+import { authMiddleware } from "./authMiddleware.js";
 
 const router = express.Router();
 
-// Lista de tareas en memoria (temporal)
-let tasks = [
-  { id: 1, title: "Aprender Node.js", completed: false },
-  { id: 2, title: "Probar deploy en Render", completed: true }
-];
+// Middleware para proteger rutas
+router.use(authMiddleware);
 
-// GET /api/tasks → devuelve lista de tareas
-router.get("/", (req, res) => {
+// GET todas las tareas
+router.get("/", async (req, res) => {
+  const tasks = await Task.find();
   res.json(tasks);
 });
 
-// POST /api/tasks → crea nueva tarea
-router.post("/", (req, res) => {
-  const { title } = req.body;
-  const newTask = { id: Date.now(), title, completed: false };
-  tasks.push(newTask);
+// POST nueva tarea
+router.post("/", async (req, res) => {
+  const newTask = new Task(req.body);
+  await newTask.save();
   res.status(201).json(newTask);
 });
 
-// DELETE /api/tasks/:id → elimina tarea por id
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  tasks = tasks.filter(task => task.id != id);
+// PUT actualizar tarea
+router.put("/:id", async (req, res) => {
+  const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(updatedTask);
+});
+
+// DELETE tarea
+router.delete("/:id", async (req, res) => {
+  await Task.findByIdAndDelete(req.params.id);
   res.json({ message: "Tarea eliminada" });
 });
 
