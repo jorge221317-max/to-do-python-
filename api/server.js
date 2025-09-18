@@ -1,15 +1,22 @@
 import express from "express";
 import taskRoutes from "./routes/taskRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 app.use(express.json());
 
-// Endpoints de tareas
+// Servir archivos estáticos
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "public")));
+
+// Rutas de la API
 app.use("/api/tasks", taskRoutes);
 
-// ✅ Endpoint raíz para probar la API
+// Endpoint raíz (opcional)
 app.get("/", (req, res) => {
-  res.send("API To-Do corriendo correctamente 🚀");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 const PORT = process.env.PORT || 10000;
