@@ -3,57 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>To-Do List</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    li { margin: 5px 0; }
-    button { margin-left: 10px; }
-  </style>
 </head>
 <body>
   <h1>Lista de Tareas</h1>
-  <input id="taskInput" placeholder="Nueva tarea" />
-  <button onclick="addTask()">Agregar</button>
   <ul id="task-list"></ul>
-
   <script>
-    const ul = document.getElementById("task-list");
-
-    function fetchTasks() {
-      fetch("/api/tasks")
-        .then(res => res.json())
-        .then(tasks => {
-          ul.innerHTML = "";
-          tasks.forEach(task => {
-            const li = document.createElement("li");
-            li.textContent = task.title + (task.completed ? " ✅" : "");
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "Eliminar";
-            delBtn.onclick = () => deleteTask(task.id);
-            li.appendChild(delBtn);
-            ul.appendChild(li);
-          });
-        });
-    }
-
-    function addTask() {
-      const title = document.getElementById("taskInput").value;
-      if(!title) return alert("Ingresá un título");
-      fetch("/api/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title })
-      })
-      .then(res => res.json())
-      .then(() => { document.getElementById("taskInput").value = ""; fetchTasks(); });
-    }
-
-    function deleteTask(id) {
-      fetch("/api/tasks/" + id, { method: "DELETE" })
-        .then(res => res.json())
-        .then(() => fetchTasks());
-    }
-
-    fetchTasks();
+    fetch('/api/tasks', {
+      headers: { "Authorization": "Bearer TU_TOKEN_AQUI" } // JWT
+    })
+    .then(res => res.json())
+    .then(tasks => {
+      const ul = document.getElementById("task-list");
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = task.title + (task.completed ? " ✅" : " ❌");
+        ul.appendChild(li);
+      });
+    });
   </script>
 </body>
 </html>
