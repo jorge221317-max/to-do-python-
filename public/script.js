@@ -1,23 +1,20 @@
-const taskInput = document.getElementById("new-task");
-const addTaskBtn = document.getElementById("add-task");
-const taskList = document.getElementById("task-list");
+const inputTarea = document.getElementById('nuevaTarea');
+const btnAgregar = document.getElementById('agregarTarea');
+const listaTareas = document.getElementById('listaTareas');
 
-addTaskBtn.addEventListener("click", () => {
-  const taskText = taskInput.value.trim();
-  if (taskText !== "") {
-    const li = document.createElement("li");
-    li.textContent = taskText;
-    li.addEventListener("click", () => {
-      li.classList.toggle("completed");
-    });
-    taskList.appendChild(li);
-    taskInput.value = "";
-  }
-});
+btnAgregar.addEventListener('click', () => {
+  const tareaTexto = inputTarea.value.trim();
+  if (tareaTexto === "") return;
 
-// Enter key support
-taskInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    addTaskBtn.click();
-  }
+  const li = document.createElement('li');
+  li.textContent = tareaTexto;
+
+  const btnBorrar = document.createElement('button');
+  btnBorrar.textContent = "Eliminar";
+  btnBorrar.addEventListener('click', () => li.remove());
+
+  li.appendChild(btnBorrar);
+  listaTareas.appendChild(li);
+
+  inputTarea.value = "";
 });
