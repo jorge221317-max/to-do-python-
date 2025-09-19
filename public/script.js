@@ -3,7 +3,7 @@ function addTask() {
   const taskInput = document.getElementById("task");
   const taskText = taskInput.value.trim();
 
-  if (taskText === "") return;
+  if (!taskText) return;
 
   const li = document.createElement("li");
 
@@ -22,29 +22,47 @@ function addTask() {
   taskInput.value = "";
 }
 
-/* Carrusel de paisajes */
+/* Carrusel dinámico desde API */
+const slidesContainer = document.getElementById("slides");
 let slideIndex = 0;
-const slides = document.querySelector(".slides");
-const totalSlides = slides.children.length;
+let totalSlides = 0;
+
+async function loadImages() {
+  try {
+    const res = await fetch("/api/images");
+    const images = await res.json();
+    images.forEach(name => {
+      const img = document.createElement("img");
+      img.src = `images/${name}`;
+      img.alt = name;
+      slidesContainer.appendChild(img);
+    });
+    totalSlides = images.length;
+    updateSlide();
+  } catch (err) {
+    console.error("Error cargando imágenes:", err);
+  }
+}
 
 function updateSlide() {
-  slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+  slidesContainer.style.transform = `translateX(-${slideIndex * 100}%)`;
 }
 
 function nextSlide() {
-  slideIndex++;
-  if (slideIndex >= totalSlides) slideIndex = 0;
+  slideIndex = (slideIndex + 1) % totalSlides;
   updateSlide();
 }
 
 function prevSlide() {
-  slideIndex--;
-  if (slideIndex < 0) slideIndex = totalSlides - 1;
+  slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
   updateSlide();
 }
 
 setInterval(() => {
-  slideIndex++;
-  if (slideIndex >= totalSlides) slideIndex = 0;
-  updateSlide();
+  if (totalSlides > 0) {
+    slideIndex = (slideIndex + 1) % totalSlides;
+    updateSlide();
+  }
 }, 4000);
+
+loadImages();
