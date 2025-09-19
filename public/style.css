@@ -1,85 +1,99 @@
-/* Fondo con gradiente azul */
 body {
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  background-color: #4a90e2; /* Fondo azul */
   color: white;
-  min-height: 100vh;
-}
-
-/* Contenedor principal */
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
   text-align: center;
+  margin: 0;
+  padding: 20px;
 }
 
-/* Título */
 h1, h2 {
-  color: #fff;
   margin-bottom: 20px;
-}
-
-/* Input y botón */
-.task-input {
-  margin-bottom: 20px;
-}
-
-.task-input input {
-  padding: 10px;
-  width: 65%;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-}
-
-.task-input button {
-  padding: 10px 15px;
-  margin-left: 10px;
-  background: #ff9800;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.task-input button:hover {
-  background: #e68900;
 }
 
 /* Lista de tareas */
-#task-list {
+.todo-container {
+  margin-bottom: 40px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  color: #4a90e2;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+ul {
   list-style: none;
   padding: 0;
+  margin-top: 20px;
 }
 
-#task-list li {
-  background: rgba(255, 255, 255, 0.15);
-  margin: 10px 0;
-  padding: 12px;
+li {
+  background: rgba(255,255,255,0.2);
+  margin: 10px auto;
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Carrusel */
+.carousel {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
   border-radius: 10px;
-  backdrop-filter: blur(4px);
-  font-size: 18px;
 }
 
-/* Galería de imágenes */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 15px;
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
 }
 
-.gallery img {
+.slides img {
   width: 100%;
-  border-radius: 15px;
-  box-shadow: 0px 6px 10px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
-.gallery img:hover {
-  transform: scale(1.05);
+/* Botones del carrusel */
+.carousel button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 2;
+  transition: background 0.3s;
 }
+
+.carousel button:hover {
+  background-color: rgba(0,0,0,0.7);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
