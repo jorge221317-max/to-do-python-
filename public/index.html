@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do y Paisajes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Lista y Carrusel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>📋 Lista de Tareas</h1>
-  <div class="todo-container">
-    <input type="text" id="task" placeholder="Escribí una tarea...">
-    <button onclick="addTask()">Agregar</button>
-    <ul id="task-list"></ul>
-  </div>
+    <div class="container">
+        <h1>Mi Lista de Tareas</h1>
+        <input type="text" id="taskInput" placeholder="Nueva tarea">
+        <button id="addTaskBtn">Agregar</button>
+        <ul id="taskList"></ul>
 
-  <h2>🏞️ Paisajes</h2>
-  <div class="carousel">
-    <div class="slides" id="slides"></div>
-    <button class="prev" onclick="prevSlide()">&#10094;</button>
-    <button class="next" onclick="nextSlide()">&#10095;</button>
-  </div>
-
-  <script src="script.js"></script>
+        <h2>Paisajes</h2>
+        <div class="carousel">
+            <button id="prev">&lt;</button>
+            <img id="carouselImage" src="" alt="Paisaje">
+            <button id="next">&gt;</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
