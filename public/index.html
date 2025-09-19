@@ -3,32 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Tareas y Paisajes</title>
+  <title>To-Do y Paisajes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-
-    <h1>🌿 Lista de Tareas</h1>
-
-    <!-- Formulario para agregar tareas -->
-    <div class="task-input">
-      <input type="text" id="task" placeholder="Escribe una nueva tarea...">
-      <button onclick="addTask()">Agregar</button>
-    </div>
-
-    <!-- Lista de tareas -->
+  <h1>📋 Lista de Tareas</h1>
+  <div class="todo-container">
+    <input type="text" id="task" placeholder="Escribí una tarea...">
+    <button onclick="addTask()">Agregar</button>
     <ul id="task-list"></ul>
+  </div>
 
-    <h2>🏞️ Paisajes</h2>
-    <div class="gallery">
+  <h2>🏞️ Paisajes</h2>
+  <div class="carousel">
+    <div class="slides">
       <img src="images/paisaje1.jpg" alt="Paisaje 1">
       <img src="images/paisaje2.jpg" alt="Paisaje 2">
       <img src="images/paisaje3.jpg" alt="Paisaje 3">
     </div>
+    <button class="prev" onclick="prevSlide()">&#10094;</button>
+    <button class="next" onclick="nextSlide()">&#10095;</button>
   </div>
 
-  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
