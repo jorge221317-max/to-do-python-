@@ -1,8 +1,8 @@
-// ===== Lista de tareas =====
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 
+// ===== Lista de tareas =====
 addTaskBtn.addEventListener("click", () => {
   const task = taskInput.value.trim();
   if(task) {
@@ -15,31 +15,23 @@ addTaskBtn.addEventListener("click", () => {
 });
 
 // ===== Carrusel de imágenes =====
-let images = [];
-let currentIndex = 0;
 const carouselImage = document.getElementById("carouselImage");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
 
-// Traer imágenes desde el servidor
-fetch("/api/images")
-  .then(res => res.json())
-  .then(data => {
-    images = data;
-    if(images.length > 0){
-      currentIndex = 0;
-      carouselImage.src = `/images/${images[currentIndex]}`;
-    }
-  });
+// Lista de imágenes (nombres de los archivos que subas a public/images)
+const images = ["paisaje1.jpg", "paisaje2.jpg", "paisaje3.jpg"];
+let currentIndex = 0;
+
+// Mostrar la primera imagen
+carouselImage.src = `/images/${images[currentIndex]}`;
 
 prevBtn.addEventListener("click", () => {
-  if(images.length === 0) return;
   currentIndex = (currentIndex - 1 + images.length) % images.length;
   carouselImage.src = `/images/${images[currentIndex]}`;
 });
 
 nextBtn.addEventListener("click", () => {
-  if(images.length === 0) return;
   currentIndex = (currentIndex + 1) % images.length;
   carouselImage.src = `/images/${images[currentIndex]}`;
 });
