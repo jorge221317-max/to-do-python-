@@ -1,87 +1,45 @@
-// ======= LISTA DE TAREAS =======
-const taskInput = document.getElementById("task-input");
-const addTaskBtn = document.getElementById("add-task-btn");
-const taskList = document.getElementById("task-list");
+// ===== Lista de tareas =====
+const taskInput = document.getElementById("taskInput");
+const addTaskBtn = document.getElementById("addTaskBtn");
+const taskList = document.getElementById("taskList");
 
-addTaskBtn.addEventListener("click", addTask);
-taskInput.addEventListener("keypress", e => {
-  if (e.key === "Enter") addTask();
+addTaskBtn.addEventListener("click", () => {
+    const task = taskInput.value.trim();
+    if(task) {
+        const li = document.createElement("li");
+        li.textContent = task;
+        li.addEventListener("click", () => li.remove());
+        taskList.appendChild(li);
+        taskInput.value = "";
+    }
 });
 
-function addTask() {
-  const taskText = taskInput.value.trim();
-  if (!taskText) return;
-
-  const li = document.createElement("li");
-  const span = document.createElement("span");
-  span.textContent = taskText;
-
-  span.addEventListener("click", () => {
-    span.classList.toggle("completed");
-  });
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "❌";
-  deleteBtn.addEventListener("click", () => li.remove());
-
-  li.appendChild(span);
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
-
-  taskInput.value = "";
-}
-
-// ======= CARRUSEL DE IMÁGENES =======
-const slidesContainer = document.querySelector(".slides");
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-
+// ===== Carrusel de imágenes =====
+let images = [];
 let currentIndex = 0;
-let totalSlides = 0;
+const carouselImage = document.getElementById("carouselImage");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
 
-async function loadImages() {
-  try {
-    const res = await fetch("/api/images"); // <- si no hay backend, podemos usar un array local
-    let images;
-    if (res.ok) {
-      images = await res.json();
-    } else {
-      // fallback si no hay API: lista de imágenes locales
-      images = ["paisaje1.jpg", "paisaje2.jpg", "paisaje3.jpg"];
-    }
-
-    images.forEach(name => {
-      const img = document.createElement("img");
-      img.src = `images/${name}`;
-      img.alt = name;
-      slidesContainer.appendChild(img);
+// Obtener imágenes desde servidor
+fetch("/api/images")
+    .then(res => res.json())
+    .then(data => {
+        images = data;
+        if(images.length > 0) {
+            currentIndex = 0;
+            carouselImage.src = `/images/${images[currentIndex]}`;
+        }
     });
-    totalSlides = images.length;
-    slidesContainer.style.width = `${totalSlides * 100}%`;
-    updateSlide();
-  } catch (err) {
-    console.error("Error cargando imágenes:", err);
-  }
-}
 
-function updateSlide() {
-  slidesContainer.style.transform = `translateX(-${currentIndex * (100 / totalSlides)}%)`;
-}
+prevBtn.addEventListener("click", () => {
+    if(images.length === 0) return;
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    carouselImage.src = `/images/${images[currentIndex]}`;
+});
 
-function nextSlide() {
-  currentIndex = (currentIndex + 1) % totalSlides;
-  updateSlide();
-}
-
-function prevSlide() {
-  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-  updateSlide();
-}
-
-nextBtn.addEventListener("click", nextSlide);
-prevBtn.addEventListener("click", prevSlide);
-
-// Cambiar imagen cada 3 segundos
-setInterval(nextSlide, 3000);
-
-loadImages();
+nextBtn.addEventListener("click", () => {
+    if(images.length === 0) return;
+    currentIndex = (currentIndex + 1) % images.length;
+    carouselImage.src = `/images/${images[currentIndex]}`;
+});
